@@ -1,101 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import Login from "./components/Login";
 import Ordenes from "./components/Ordenes";
 import Dashboard from "./components/Dashboard";
 import Productos from "./components/Productos";
-import Clientes from "./components/Clientes";   // ✅ AGREGAR
+import Clientes from "./components/Clientes";
+import TiendaUsuario from "./components/TiendaUsuario";
 
 import "./App.css";
 
 function App() {
-  const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem("user");
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
-
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    } else {
-      localStorage.removeItem("user");
-    }
-  }, [user]);
-
-  const handleLogout = () => {
-    setUser(null);
-  };
-
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* LOGIN */}
-        <Route
-          path="/"
-          element={
-            !user ? (
-              <Login onLogin={(userData) => setUser(userData)} />
-            ) : (
-              <Navigate to="/dashboard" />
-            )
-          }
-        />
+        {/* Ruta principal → Dashboard */}
+        <Route path="/" element={<Dashboard />} />
 
         {/* ÓRDENES */}
-        <Route
-          path="/ordenes"
-          element={
-            user ? (
-              <Ordenes user={user} onLogout={handleLogout} />
-            ) : (
-              <Navigate to="/" />
-            )
-          }
-        />
+        <Route path="/ordenes" element={<Ordenes />} />
 
         {/* DASHBOARD */}
-        <Route
-          path="/dashboard"
-          element={
-            user ? (
-              <Dashboard user={user} onLogout={handleLogout} />
-            ) : (
-              <Navigate to="/" />
-            )
-          }
-        />
+        <Route path="/dashboard" element={<Dashboard />} />
 
         {/* PRODUCTOS */}
-        <Route
-          path="/productos"
-          element={
-            user ? (
-              <Productos user={user} onLogout={handleLogout} />
-            ) : (
-              <Navigate to="/" />
-            )
-          }
-        />
+        <Route path="/productos" element={<Productos />} />
 
-        {/* ✅ CLIENTES (NUEVA RUTA) */}
-        <Route
-          path="/clientes"
-          element={
-            user ? (
-              <Clientes user={user} onLogout={handleLogout} />
-            ) : (
-              <Navigate to="/" />
-            )
-          }
-        />
+        {/* CLIENTES */}
+        <Route path="/clientes" element={<Clientes />} />
+
+         {/* CLIENTES */}
+        <Route path="/TiendaUsuario" element={<TiendaUsuario />} />
 
         {/* DEFAULT */}
-        <Route
-          path="*"
-          element={<Navigate to={user ? "/dashboard" : "/"} />}
-        />
+        <Route path="*" element={<Navigate to="/dashboard" />} />
 
       </Routes>
     </BrowserRouter>

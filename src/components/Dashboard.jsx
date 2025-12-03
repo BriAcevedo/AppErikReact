@@ -143,6 +143,19 @@ export default function Dashboard({ user, onLogout }) {
           <span style={{ fontSize: 30 }}>👥</span>
           <p style={cardText}>Productos Clientes</p>
         </div>
+
+
+        {/* PRODUCTOS TIENDA */}
+        <div
+          onClick={() => navigate("/TiendaUsuario")}
+          style={cardButton("135deg, #8b5cf6, #6d28d9")}
+          onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.04)")}
+          onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+        >
+          <span style={{ fontSize: 30 }}>🏬</span>
+          <p style={cardText}>Productos Tienda</p>
+        </div>
+
       </div>
 
       {/* FOOTER */}
